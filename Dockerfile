@@ -7,9 +7,9 @@ RUN apt-get install -y build-essential libtool autotools-dev automake pkg-config
 RUN apt-get install -y libboost-all-dev libzmq3-dev curl wget net-tools
 
 RUN mkdir ~/source \
-  && cd ~/source && wget https://github.com/python16/bitcoin/archive/v0.15.1.tar.gz \
+  && cd ~/source && wget https://github.com/python16/bitcoin/archive/v0.16.0.tar.gz \
   && cd ~/source \
-  && tar zxf v0.15.1.tar.gz && cd bitcoin-0.15.1 \
+  && tar zxf v0.16.0.tar.gz && cd bitcoin-0.16.0 \
   && ./autogen.sh \
   && ./configure --disable-wallet --disable-tests \
   && make && make install
