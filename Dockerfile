@@ -7,7 +7,7 @@ ENV OPT_ZMQ="-zmqpubrawblock=tcp://0.0.0.0:8331 -zmqpubrawtx=tcp://0.0.0.0:8331 
 
 RUN apt-get update && \
     apt-get install -y build-essential wget curl net-tools libtool autotools-dev \
-    automake pkg-config libssl-dev libevent-dev bsdmainutils python3 \
+    automake pkg-config libssl-dev libevent-dev bsdmainutils \
     libboost-system-dev libboost-filesystem-dev libboost-chrono-dev \
     libboost-program-options-dev libboost-test-dev libboost-thread-dev libzmq3-dev && \
     mkdir ~/source && \
