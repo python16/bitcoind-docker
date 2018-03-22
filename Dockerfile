@@ -1,6 +1,6 @@
 FROM phusion/baseimage:0.10.0
 
-ENV BTC_VERSION 0.16.0
+ENV BTC_VERSION 0.15.1
 RUN mkdir -p /root/.bitcoin
 VOLUME /root/.bitcoin
 ENV OPT_ZMQ="-zmqpubrawblock=tcp://0.0.0.0:8331 -zmqpubrawtx=tcp://0.0.0.0:8331 -zmqpubhashtx=tcp://0.0.0.0:8331 -zmqpubhashblock=tcp://0.0.0.0:8331"
