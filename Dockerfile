@@ -1,13 +1,23 @@
 FROM phusion/baseimage:0.10.0
 
-#ENV BTC_VERSION latest in ppa
+ENV BTC_VERSION 0.16.0
 RUN mkdir -p /root/.bitcoin
 VOLUME /root/.bitcoin
 ENV OPT_ZMQ="-zmqpubrawblock=tcp://0.0.0.0:8331 -zmqpubrawtx=tcp://0.0.0.0:8331 -zmqpubhashtx=tcp://0.0.0.0:8331 -zmqpubhashblock=tcp://0.0.0.0:8331"
 
-RUN add-apt-repository ppa:bitcoin/bitcoin && \
-    apt-get update && \
-    apt-get install -y bitcoin
+RUN apt-get update && \
+    apt-get install -y build-essential libtool autotools-dev \
+    automake pkg-config libssl-dev libevent-dev bsdmainutils python3 \
+    libboost-system-dev libboost-filesystem-dev libboost-chrono-dev \
+    libboost-program-options-dev libboost-test-dev libboost-thread-dev libzmq3-dev && \
+    mkdir ~/source && \
+    cd ~/source && \
+    wget https://github.com/python16/bitcoin/archive/v${BTC_VERSION}.tar.gz && \
+    tar zxf v${BTC_VERSION}.tar.gz && \
+    cd bitcoin-${BTC_VERSION} && \
+    ./autogen.sh && \
+    ./configure --disable-wallet --disable-tests && \
+    make && make install
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
