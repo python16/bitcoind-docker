@@ -17,13 +17,12 @@ RUN apt-get update && \
     cd bitcoin-${BTC_VERSION} && \
     ./autogen.sh && \
     ./configure --disable-wallet --disable-tests && \
-    make && make install
+    make && make install && \
+    apt-get remove apt-get install -y build-essential wget curl net-tools libtool autotools-dev \
+    automake pkg-config && \
+    apt-get autoremove -y && rm -rf ~/source && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN apt-get remove apt-get install -y build-essential wget curl net-tools libtool autotools-dev \
-    automake pkg-config
-RUN apt-get autoremove -y
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-ENTRYPOINT ["/sbin/my_init", "--","bitcoind"]
-CMD ['-conf="/root/.bitcoin/bitcoin.conf"', '-datadir="/root/.bitcoin"',$OPT_ZMQ]
+ENTRYPOINT ["/sbin/my_init", "--",]
+CMD ["bitcoind",'-conf="/root/.bitcoin/bitcoin.conf"', '-datadir="/root/.bitcoin"',$OPT_ZMQ]
 EXPOSE 8333 18333 8332 18332 8331 18331
