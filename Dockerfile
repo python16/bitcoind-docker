@@ -19,6 +19,9 @@ RUN apt-get update && \
     ./configure --disable-wallet --disable-tests && \
     make && make install
 
+RUN apt-get remove apt-get install -y build-essential wget curl net-tools libtool autotools-dev \
+    automake pkg-config
+RUN apt-get autoremove -y
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENTRYPOINT ["/sbin/my_init", "--","bitcoind"]
