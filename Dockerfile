@@ -20,9 +20,9 @@ RUN apt-get update && \
     make && make install && \
     apt-get remove -y build-essential wget curl net-tools libtool autotools-dev \
     automake pkg-config && \
-    apt-get autoremove -y && rm -rf ~/source && \
+    apt-get autoremove -y && rm -rf ~/source && rm -rf /usr/include/boost && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENTRYPOINT ["/sbin/my_init", "--"]
-CMD ["bitcoind",'-conf="/root/.bitcoin/bitcoin.conf"', '-datadir="/root/.bitcoin"',$OPT_ZMQ]
+CMD ["bitcoind","-conf='/root/.bitcoin/bitcoin.conf'", "-datadir='/root/.bitcoin'",$OPT_ZMQ]
 EXPOSE 8333 18333 8332 18332 8331 18331
