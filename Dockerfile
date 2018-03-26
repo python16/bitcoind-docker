@@ -18,7 +18,7 @@ RUN apt-get update && \
     ./autogen.sh && \
     ./configure --disable-wallet --disable-tests && \
     make && make install && \
-    apt-get remove apt-get install -y build-essential wget curl net-tools libtool autotools-dev \
+    apt-get remove -y build-essential wget curl net-tools libtool autotools-dev \
     automake pkg-config && \
     apt-get autoremove -y && rm -rf ~/source && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
