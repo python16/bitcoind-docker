@@ -1,8 +1,10 @@
 FROM phusion/baseimage:0.10.0
-
+ARG mirrors
 ENV BTC_VERSION 0.16.0
 RUN mkdir -p /root/.bitcoin
 VOLUME /root/.bitcoin
+ADD mirrors.sources.list /etc/apt/mirrors.sources.list
+RUN test -z "$mirrors" || cp /etc/apt/mirrors.sources.list /etc/apt/sources.list && :
 ENV OPT_ZMQ="-zmqpubrawblock=tcp://0.0.0.0:8331 -zmqpubrawtx=tcp://0.0.0.0:8331 -zmqpubhashtx=tcp://0.0.0.0:8331 -zmqpubhashblock=tcp://0.0.0.0:8331"
 
 RUN apt-get update && \
@@ -24,5 +26,5 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENTRYPOINT ["/sbin/my_init", "--"]
-CMD ["bitcoind","-conf='/root/.bitcoin/bitcoin.conf'", "-datadir='/root/.bitcoin'",$OPT_ZMQ]
+CMD ["bitcoind",$OPT_ZMQ]
 EXPOSE 8333 18333 8332 18332 8331 18331
